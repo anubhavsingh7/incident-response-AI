@@ -1,0 +1,15 @@
+name: incident-response-env
+description: AI environment for DevOps incident response simulation
+version: 1.0
+
+observation:
+  type: Observation
+
+action:
+  type: Action
+
+reward:
+  type: Reward
+
+tasks:
+  count: 3
