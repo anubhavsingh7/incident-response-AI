@@ -14,7 +14,7 @@ class IncidentEnv:
             incident_id=self.index,
             logs=task["logs"],
             alert=task["alert"]
-        )
+        ).model_dump()   
 
     def step(self, action):
         task = self.tasks[self.index]
@@ -35,12 +35,12 @@ class IncidentEnv:
                 incident_id=self.index,
                 logs=next_task["logs"],
                 alert=next_task["alert"]
-            )
+            ).model_dump()  
         else:
-            obs = Observation(
-                incident_id=self.index,
-                logs="completed",
-                alert="done"
-            )
+            obs = {
+                "incident_id": self.index,
+                "logs": "completed",
+                "alert": "done"
+            }
 
-        return obs, Reward(score=score), done, {}
+        return obs, Reward(score=score).model_dump(), done, {} 
