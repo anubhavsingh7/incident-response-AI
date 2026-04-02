@@ -1,6 +1,8 @@
 name: incident-response-env
-description: AI environment for DevOps incident response simulation
+description: AI environment for incident response simulation
 version: 1.0
+
+entrypoint: inference.py
 
 observation:
   type: Observation
@@ -10,6 +12,3 @@ action:
 
 reward:
   type: Reward
-
-tasks:
-  count: 3
