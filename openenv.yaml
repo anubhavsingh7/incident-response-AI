@@ -1,14 +1,5 @@
 name: incident-response-env
-description: AI environment for incident response simulation
+description: Incident response simulation
 version: 1.0
 
 entrypoint: inference.py
-
-observation:
-  type: Observation
-
-action:
-  type: Action
-
-reward:
-  type: Reward
