@@ -1,9 +1,9 @@
 from env.models import Observation, Reward
-from env.tasks import tasks   
+from env.tasks import tasks
 
 class IncidentEnv:
     def __init__(self):
-        self.tasks = tasks  
+        self.tasks = tasks
         self.index = 0
 
     def reset(self):
@@ -37,6 +37,10 @@ class IncidentEnv:
                 alert=next_task["alert"]
             )
         else:
-            obs = None
+            obs = Observation(
+                incident_id=self.index,
+                logs="completed",
+                alert="done"
+            )
 
         return obs, Reward(score=score), done, {}
