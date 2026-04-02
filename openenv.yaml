@@ -1,5 +1,3 @@
 name: incident-response-env
-description: Incident response simulation
 version: 1.0
-
 entrypoint: inference.py
