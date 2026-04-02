@@ -1,7 +1,7 @@
 from env.environment import IncidentEnv
 from env.agent import get_action
 
-def run_inference():
+def run():
     env = IncidentEnv()
     obs = env.reset()
     total_score = 0
@@ -14,7 +14,7 @@ def run_inference():
         if done:
             break
 
-    return {"score": total_score}
+    return total_score
 
 if __name__ == "__main__":
-    print(run_inference())
+    print({"score": run()})
