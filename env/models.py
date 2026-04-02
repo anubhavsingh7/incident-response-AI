@@ -13,4 +13,3 @@ class Action(BaseModel):
 
 class Reward(BaseModel):
     score: float
-    feedback: Optional[str] = None
