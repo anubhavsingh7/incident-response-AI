@@ -39,7 +39,7 @@ class IncidentEnv:
         else:
             obs = Observation(
                 incident_id=self.index,
-                logs="completed",
+                logs="done",
                 alert="done"
             )
 
