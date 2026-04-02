@@ -1,3 +1,4 @@
-name: incident-response-env
-version: 1.0
-entrypoint: inference.py
+name: incident-response-AI
+version: 1.0.0
+description: AI Incident Response Environment
+type: custom
