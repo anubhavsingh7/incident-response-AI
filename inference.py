@@ -4,7 +4,6 @@ from env.agent import get_action
 def main():
     env = IncidentEnv()
     obs = env.reset()
-
     total_score = 0.0
 
     while True:
