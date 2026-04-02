@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from typing import Optional
 
 class Observation(BaseModel):
     incident_id: int
