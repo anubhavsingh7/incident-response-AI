@@ -1,20 +1,23 @@
 from env.environment import IncidentEnv
 from env.agent import get_action
 
-def run():
+def main():
     env = IncidentEnv()
     obs = env.reset()
-    total_score = 0
+
+    total_score = 0.0
 
     while True:
         action = get_action(obs)
-        obs, reward, done, _ = env.step(action)
+        obs, reward, done, info = env.step(action)
+
         total_score += reward.score
 
         if done:
             break
 
-    return total_score
+    # 🔥 IMPORTANT: print ONLY final score number
+    print(total_score)
 
 if __name__ == "__main__":
-    print({"score": run()})
+    main()
