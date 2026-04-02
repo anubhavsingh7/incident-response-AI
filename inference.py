@@ -1,5 +1,6 @@
 from env.environment import IncidentEnv
 from env.agent import get_action
+from env.models import Action
 
 def main():
     env = IncidentEnv()
@@ -9,14 +10,17 @@ def main():
 
     while True:
         action = get_action(obs)
-        obs, reward, done, info = env.step(action)
 
-        total_score += reward.score
+        
+        action_obj = Action(**action.model_dump())
+
+        obs, reward, done, _ = env.step(action_obj)
+
+        total_score += reward["score"]
 
         if done:
             break
 
-    # 🔥 IMPORTANT: print ONLY final score number
     print(total_score)
 
 if __name__ == "__main__":
