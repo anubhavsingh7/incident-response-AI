@@ -1,47 +1,72 @@
-TASKS = [
+tasks = [
+
+
     {
-        "id": "easy",
-        "logs": "Error: Database connection timeout at 10:32PM",
-        "alert": "Service latency spike",
+        "logs": "Database connection timeout error",
+        "alert": "Latency spike",
         "expected": {
             "issue_type": "database",
             "severity": "high"
         }
     },
     {
-        "id": "medium",
-        "logs": "503 errors across multiple endpoints",
-        "alert": "API unavailable",
+        "logs": "CPU usage high on server",
+        "alert": "Resource usage alert",
         "expected": {
-            "issue_type": "server",
-            "severity": "critical"
+            "issue_type": "cpu",
+            "severity": "medium"
+        }
+    },
+
+    
+    {
+        "logs": "Disk almost full, storage at 95%",
+        "alert": "Storage warning",
+        "expected": {
+            "issue_type": "disk",
+            "severity": "high"
         }
     },
     {
-        "id": "hard",
-        "logs": "Intermittent packet loss detected, high retry rate",
-        "alert": "Slow response in multiple regions",
+        "logs": "API response time increasing gradually",
+        "alert": "Performance degradation",
+        "expected": {
+            "issue_type": "network",
+            "severity": "medium"
+        }
+    },
+    {
+        "logs": "Memory leak detected in application",
+        "alert": "Memory usage alert",
+        "expected": {
+            "issue_type": "memory",
+            "severity": "high"
+        }
+    },
+
+
+    {
+        "logs": "Multiple failed login attempts detected from unknown IP",
+        "alert": "Security breach attempt",
+        "expected": {
+            "issue_type": "security",
+            "severity": "high"
+        }
+    },
+    {
+        "logs": "Service unavailable intermittently, possible load balancer issue",
+        "alert": "Service disruption",
         "expected": {
             "issue_type": "network",
             "severity": "high"
         }
     },
     {
-    "id": "extra1",
-    "logs": "Disk space full error",
-    "alert": "System failure",
-    "expected": {
-        "issue_type": "server",
-        "severity": "high"
+        "logs": "Database replication lag detected across nodes",
+        "alert": "Data inconsistency risk",
+        "expected": {
+            "issue_type": "database",
+            "severity": "medium"
+        }
     }
-},
-{
-    "id": "extra2",
-    "logs": "DNS resolution failed",
-    "alert": "Service unreachable",
-    "expected": {
-        "issue_type": "network",
-        "severity": "critical"
-    }
-}
 ]
