@@ -9,7 +9,7 @@ st.set_page_config(page_title="AI Incident Response", layout="wide")
 
 st.title("🚨AI Incident Response")
 
-# Initialize state
+
 if "env" not in st.session_state:
     st.session_state.env = IncidentEnv()
     st.session_state.obs = st.session_state.env.reset()
