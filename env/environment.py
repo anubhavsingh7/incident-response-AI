@@ -1,19 +1,15 @@
 from env.models import Observation, Reward
-from env.tasks import TASKS
-from env.graders import grade
+from env.tasks import tasks   
 
 class IncidentEnv:
     def __init__(self):
+        self.tasks = tasks  
         self.index = 0
-        self.done = False
 
     def reset(self):
         self.index = 0
-        self.done = False
-        return self._get_obs()
+        task = self.tasks[self.index]
 
-    def _get_obs(self):
-        task = TASKS[self.index]
         return Observation(
             incident_id=self.index,
             logs=task["logs"],
@@ -21,17 +17,26 @@ class IncidentEnv:
         )
 
     def step(self, action):
-        task = TASKS[self.index]
-        score, feedback = grade(action, task["expected"])
+        task = self.tasks[self.index]
+        score = 0.0
 
-        reward = Reward(score=score, feedback=feedback)
+        if action.issue_type == task["expected"]["issue_type"]:
+            score += 0.5
+
+        if action.severity == task["expected"]["severity"]:
+            score += 0.5
 
         self.index += 1
-        if self.index >= len(TASKS):
-            self.done = True
+        done = self.index >= len(self.tasks)
 
-        obs = None if self.done else self._get_obs()
-        return obs, reward, self.done, {}
+        if not done:
+            next_task = self.tasks[self.index]
+            obs = Observation(
+                incident_id=self.index,
+                logs=next_task["logs"],
+                alert=next_task["alert"]
+            )
+        else:
+            obs = None
 
-    def state(self):
-        return {"index": self.index, "done": self.done}
+        return obs, Reward(score=score), done, {}
