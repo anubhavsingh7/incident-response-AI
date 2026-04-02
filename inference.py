@@ -9,7 +9,6 @@ def main():
     while True:
         action = get_action(obs)
         obs, reward, done, _ = env.step(action)
-
         total_score += reward.score
 
         if done:
