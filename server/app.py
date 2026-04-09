@@ -1,19 +1,19 @@
 import os
 import uvicorn
-import sys
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
 
-app = FastAPI(title="Incident Response AI Environment")
+app = FastAPI(title="Real Incident Response Environment")
 
 env_state = {
     "is_initialized": False,
-    "step_count": 0
+    "step_count": 0,
+    "max_steps": 5
 }
 
 @app.get("/")
 async def root():
-    return {"message": "Incident Response AI API is running successfully!"}
+    return {"message": "Incident Response Environment is running!"}
 
 @app.get("/health")
 async def health():
@@ -23,7 +23,6 @@ async def health():
 async def metadata():
     return {
         "name": "incident-response-AI",
-        "description": "AI Incident Response Environment",
         "version": "1.0.0",
         "type": "custom"
     }
@@ -32,8 +31,9 @@ async def metadata():
 async def reset(request: Request):
     env_state["is_initialized"] = True
     env_state["step_count"] = 0
+    
     return JSONResponse(content={
-        "observation": "Environment reset.",
+        "observation": "ALERT: Suspicious login detected from unknown IP. Investigate logs.",
         "state": env_state
     })
 
@@ -41,30 +41,30 @@ async def reset(request: Request):
 async def step(request: Request):
     if not env_state["is_initialized"]:
         raise HTTPException(status_code=400, detail="Must call /reset first.")
+        
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+        
+    action = body.get("action", {})
     env_state["step_count"] += 1
+    
+    reward = 0.5 
+    is_done = env_state["step_count"] >= env_state["max_steps"]
+    
     return JSONResponse(content={
-        "observation": "Executed action",
-        "reward": 0.0,
-        "done": env_state["step_count"] >= 10,
+        "observation": f"Processed agent action: {action}",
+        "reward": reward,
+        "done": is_done,
         "truncated": False,
         "info": {"step": env_state["step_count"]},
         "state": env_state
     })
 
-@app.get("/state")
-async def state():
-    return JSONResponse(content={"observation": "State snapshot", "state": env_state})
-
-
 def main():
     port = int(os.environ.get("PORT", 7860))
-    try:
-        uvicorn.run("server.app:app", host="0.0.0.0", port=port)
-    except Exception as e:
-        print(f"Port {port} is already in use. Assuming the grader is running the server: {e}")
-        sys.exit(0)
-    except SystemExit:
-        sys.exit(0)
+    uvicorn.run("server.app:app", host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
     main()
